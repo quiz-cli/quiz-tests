@@ -1,0 +1,105 @@
+---
+name: "Basic quiz flow with one player"
+description: >
+  Admin starts the quiz, one player connects, answers both questions,
+  quiz ends normally.
+
+quiz_file: quiz.yaml
+
+actors:
+  admin:
+    role: admin
+  alice:
+    role: client
+
+steps:
+  # --- Admin connects and starts quiz ---
+  - actor: admin
+    action: connect
+  - actor: admin
+    action: expect
+    contains: "Admin for the quiz"
+
+  # --- Alice connects ---
+  - actor: alice
+    action: connect
+  - actor: alice
+    action: expect
+    json:
+      text: "Simple example quiz to show how does it work"
+  - actor: alice
+    action: expect
+    contains: "Check your name"
+
+  - actor: admin
+    action: expect
+    contains: "player alice connected"
+
+  # --- Question 1 ---
+  - action: comment
+    text: "Admin proceeds to question 1"
+  - actor: admin
+    action: send
+    data: "y"
+
+  - actor: alice
+    action: expect
+    json:
+      type: question
+      text: "This question has one correct answer which is A"
+  - actor: admin
+    action: expect
+    json:
+      type: question
+      text: "This question has one correct answer which is A"
+
+  - actor: alice
+    action: send
+    data:
+      client_id: alice
+      answer: "a"
+  - actor: alice
+    action: expect
+    json:
+      type: repeat
+      text: "a"
+
+  # --- Question 2 ---
+  - action: comment
+    text: "Admin proceeds to question 2"
+  - actor: admin
+    action: send
+    data: "y"
+
+  - actor: alice
+    action: expect
+    json:
+      type: question
+      text: "This question has two correct answers: C and D"
+  - actor: admin
+    action: expect
+    json:
+      type: question
+      text: "This question has two correct answers: C and D"
+
+  - actor: alice
+    action: send
+    data:
+      client_id: alice
+      answer: "c"
+  - actor: alice
+    action: expect
+    json:
+      type: repeat
+      text: "c"
+
+  # --- Quiz ends ---
+  - action: comment
+    text: "Admin sends y to end quiz - no more questions"
+  - actor: admin
+    action: send
+    data: "y"
+  # Admin receives results list containing alice's answers
+  - actor: admin
+    action: expect
+    contains: "alice"

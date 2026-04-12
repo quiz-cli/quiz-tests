@@ -1,0 +1,100 @@
+---
+name: "Two players answer a single question"
+description: >
+  Admin starts a 1-question quiz. Two players connect and both answer.
+  Verify both receive the question and their answers are echoed back.
+
+quiz_file: quiz.yaml
+
+actors:
+  admin:
+    role: admin
+  alice:
+    role: client
+  bob:
+    role: client
+
+steps:
+  # --- Admin connects ---
+  - actor: admin
+    action: connect
+  - actor: admin
+    action: expect
+    contains: "Admin for the quiz"
+
+  # --- Alice connects ---
+  - actor: alice
+    action: connect
+  - actor: alice
+    action: expect
+    json:
+      text: "Simple example quiz to show how does it work"
+  - actor: alice
+    action: expect
+    contains: "Check your name"
+  - actor: admin
+    action: expect
+    contains: "player alice connected"
+
+  # --- Bob connects ---
+  - actor: bob
+    action: connect
+  - actor: bob
+    action: expect
+    json:
+      text: "Simple example quiz to show how does it work"
+  - actor: bob
+    action: expect
+    contains: "Check your name"
+  - actor: admin
+    action: expect
+    contains: "player bob connected"
+
+  # --- Question 1 ---
+  - actor: admin
+    action: send
+    data: "y"
+
+  - actor: alice
+    action: expect
+    json:
+      type: question
+  - actor: bob
+    action: expect
+    json:
+      type: question
+  - actor: admin
+    action: expect
+    json:
+      type: question
+
+  # --- Both players answer ---
+  - actor: alice
+    action: send
+    data:
+      client_id: alice
+      answer: "a"
+  - actor: alice
+    action: expect
+    json:
+      type: repeat
+      text: "a"
+
+  - actor: bob
+    action: send
+    data:
+      client_id: bob
+      answer: "b"
+  - actor: bob
+    action: expect
+    json:
+      type: repeat
+      text: "b"
+
+  # --- Quiz ends ---
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    contains: "alice"

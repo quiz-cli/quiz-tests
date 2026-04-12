@@ -1,0 +1,33 @@
+---
+name: "Player connects before quiz starts"
+description: >
+  A player tries to connect before the admin has started the quiz.
+  The server should reject the connection.
+
+quiz:
+  name: Unused quiz
+  questions:
+    - text: "Placeholder question"
+      options:
+        - answer: "A"
+          correct: true
+
+actors:
+  admin:
+    role: admin
+  early_bird:
+    role: client
+
+steps:
+  # --- Player connects before admin ---
+  # The server has no quiz yet, should close the connection.
+  # We expect the WebSocket to be closed by the server.
+  - actor: early_bird
+    action: connect
+
+  # After server closes, the admin connects normally
+  - actor: admin
+    action: connect
+  - actor: admin
+    action: expect
+    contains: "Admin for the quiz"

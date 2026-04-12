@@ -1,0 +1,45 @@
+---
+name: "No players quiz"
+description: >
+  Admin runs through the entire quiz with no players connected.
+  The quiz should complete normally.
+
+quiz:
+  name: Solo admin quiz
+  questions:
+    - text: "Question with no audience"
+      options:
+        - answer: "A"
+          correct: true
+        - answer: "B"
+          correct: false
+
+actors:
+  admin:
+    role: admin
+
+steps:
+  - actor: admin
+    action: connect
+  - actor: admin
+    action: expect
+    contains: "Admin for the quiz"
+
+  # Proceed to question 1
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    json:
+      type: question
+      text: "Question with no audience"
+
+  # Proceed past last question - quiz ends
+  - actor: admin
+    action: send
+    data: "y"
+  # Admin receives empty results
+  - actor: admin
+    action: expect
+    json: []

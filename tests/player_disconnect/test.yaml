@@ -1,0 +1,118 @@
+---
+name: "Player disconnects mid-quiz"
+description: >
+  Admin starts a 2-question quiz. Two players connect. Bob disconnects
+  after the first question. Alice finishes alone.
+
+quiz_file: quiz.yaml
+
+actors:
+  admin:
+    role: admin
+  alice:
+    role: client
+  bob:
+    role: client
+
+steps:
+  # --- Setup ---
+  - actor: admin
+    action: connect
+  - actor: admin
+    action: expect
+    contains: "Admin for the quiz"
+
+  - actor: alice
+    action: connect
+  - actor: alice
+    action: expect
+    json:
+      text: "Simple example quiz to show how does it work"
+  - actor: alice
+    action: expect
+    contains: "Check your name"
+  - actor: admin
+    action: expect
+    contains: "player alice connected"
+
+  - actor: bob
+    action: connect
+  - actor: bob
+    action: expect
+    json:
+      text: "Simple example quiz to show how does it work"
+  - actor: bob
+    action: expect
+    contains: "Check your name"
+  - actor: admin
+    action: expect
+    contains: "player bob connected"
+
+  # --- Question 1 ---
+  - action: comment
+    text: "Admin proceeds to question 1"
+  - actor: admin
+    action: send
+    data: "y"
+
+  - actor: alice
+    action: expect
+    json:
+      type: question
+  - actor: bob
+    action: expect
+    json:
+      type: question
+  - actor: admin
+    action: expect
+    json:
+      type: question
+
+  - actor: alice
+    action: send
+    data:
+      client_id: alice
+      answer: "a"
+  - actor: alice
+    action: expect
+    json:
+      type: repeat
+
+  # --- Bob disconnects ---
+  - actor: bob
+    action: disconnect
+  - actor: admin
+    action: expect
+    contains: "Player bob disconnected"
+
+  # --- Question 2 (only Alice remains) ---
+  - actor: admin
+    action: send
+    data: "y"
+
+  - actor: alice
+    action: expect
+    json:
+      type: question
+  - actor: admin
+    action: expect
+    json:
+      type: question
+
+  - actor: alice
+    action: send
+    data:
+      client_id: alice
+      answer: "c"
+  - actor: alice
+    action: expect
+    json:
+      type: repeat
+
+  # --- Quiz ends ---
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    contains: "alice"

@@ -1,0 +1,84 @@
+---
+name: "Duplicate answer blocked"
+description: >
+  A player sends two answers for the same question. Only the first
+  should be accepted (echoed back). The second is silently ignored.
+
+quiz:
+  name: Duplicate answer test
+  questions:
+    - text: "Answer this once"
+      options:
+        - answer: "A"
+          correct: true
+        - answer: "B"
+          correct: false
+
+actors:
+  admin:
+    role: admin
+  alice:
+    role: client
+
+steps:
+  - actor: admin
+    action: connect
+  - actor: admin
+    action: expect
+    contains: "Admin for the quiz"
+
+  - actor: alice
+    action: connect
+  - actor: alice
+    action: expect
+    json:
+      text: "Duplicate answer test"
+  - actor: alice
+    action: expect
+    contains: "Check your name"
+  - actor: admin
+    action: expect
+    contains: "player alice connected"
+
+  # Proceed to question
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: alice
+    action: expect
+    json:
+      type: question
+  - actor: admin
+    action: expect
+    json:
+      type: question
+
+  # First answer — should be accepted
+  - actor: alice
+    action: send
+    data:
+      client_id: alice
+      answer: "a"
+  - actor: alice
+    action: expect
+    json:
+      type: repeat
+      text: "a"
+
+  # Second answer — player is blocked, no repeat sent back
+  - actor: alice
+    action: send
+    data:
+      client_id: alice
+      answer: "b"
+  - actor: alice
+    action: expect_nothing
+    timeout: 0.5
+
+  # End quiz
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    contains: "alice"
