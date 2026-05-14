@@ -97,4 +97,12 @@ steps:
     data: "y"
   - actor: admin
     action: expect
-    contains: "alice"
+    json:
+      - player: alice
+        question_number: 0
+        answer: a
+        correct: true
+      - player: bob
+        question_number: 0
+        answer: b
+        correct: false
