@@ -18,8 +18,13 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-quiz-common = { path = "../quiz-common" }
-quiz-server = { path = "../quiz-server" }
+quiz-common = { git = "https://github.com/quiz-cli/quiz-common.git" }
+quiz-server = { git = "https://github.com/quiz-cli/quiz-server.git" }
+
+# For local development, you can use:
+# quiz-common = { path = "../quiz-common" }
+# quiz-server = { path = "../quiz-server" }
+# Then run `uv sync`
 
 [tool.uv]
 override-dependencies = [
