@@ -24,19 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-        with:
-          path: quiz-tests
-
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
-
       - uses: astral-sh/setup-uv@v7
-
-      - name: Use CI-specific pyproject
-        working-directory: quiz-tests
-        run: |
-          mv pyproject.toml pyproject.local.toml
-          cp pyproject.ci.toml pyproject.toml
-          uv tool install ty
-          uv run ty check
+      - run: uv tool install ty
+      - run: uv run ty check
