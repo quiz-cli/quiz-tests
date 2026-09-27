@@ -85,6 +85,22 @@ steps:
     action: expect
     contains: "Player bob disconnected"
 
+  # --- Result of question 1 (only Alice remains) ---
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "a"
+  - actor: alice
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "a"
+      correct: true
+
   # --- Question 2 (only Alice remains) ---
   - actor: admin
     action: send
@@ -108,6 +124,22 @@ steps:
     action: expect
     json:
       type: repeat
+
+  # --- Result of question 2 ---
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "cd"
+  - actor: alice
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "cd"
+      correct: false
 
   # --- Quiz ends ---
   - actor: admin

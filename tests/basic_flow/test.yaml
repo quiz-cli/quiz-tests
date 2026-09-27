@@ -64,9 +64,25 @@ steps:
       type: repeat
       text: "a"
 
-  # --- Question 2 ---
+  # --- Result of question 1 ---
   - action: comment
-    text: "Admin proceeds to question 2"
+    text: "Admin shows the result of question 1"
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "a"
+  - actor: alice
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "a"
+      correct: true
+
+  # --- Question 2 ---
   - actor: admin
     action: send
     data: "y"
@@ -93,9 +109,25 @@ steps:
       type: repeat
       text: "c"
 
-  # --- Quiz ends ---
+  # --- Result of question 2 ---
   - action: comment
-    text: "Admin sends y to end quiz - no more questions"
+    text: "Admin shows the result of question 2"
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "cd"
+  - actor: alice
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "cd"
+      correct: false
+
+  # --- Quiz ends ---
   - actor: admin
     action: send
     data: "y"

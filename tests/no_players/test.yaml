@@ -35,6 +35,16 @@ steps:
       type: question
       text: "Question with no audience"
 
+  # Show result of question 1 before ending the quiz
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "a"
+
   # Proceed past last question - quiz ends
   - actor: admin
     action: send
