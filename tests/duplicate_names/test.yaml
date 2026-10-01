@@ -1,0 +1,41 @@
+---
+name: "A player cannot connect to the server if the client name is already in use."
+description: >
+  Admin starts a 2-question quiz. Alice connects, and a second player attempting to use the same name is rejected with a "nickname already exists" error.
+quiz_file: quiz.yaml
+
+actors:
+  admin:
+    role: admin
+  alice:
+    role: client
+
+steps:
+  # --- Setup ---
+  - actor: admin
+    action: connect
+  - actor: admin
+    action: expect
+    contains: "Admin for the quiz"
+
+  - actor: alice
+    action: connect
+  - actor: alice
+    action: expect
+    json:
+      text: "Simple example quiz to show how does it work"
+  - actor: alice
+    action: expect
+    contains: "Check your name"
+  - actor: admin
+    action: expect
+    contains: "player alice connected"
+
+  - actor: alice
+    action: connect
+  - actor: alice
+    action: expect
+    json:
+      text: "This nick already exists. Connect again and choose new one."
+
+     
