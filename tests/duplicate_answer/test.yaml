@@ -75,6 +75,22 @@ steps:
     action: expect_nothing
     timeout: 0.5
 
+  # Show result; the first answer remains the only recorded answer
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "a"
+  - actor: alice
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "a"
+      correct: true
+
   # End quiz
   - actor: admin
     action: send

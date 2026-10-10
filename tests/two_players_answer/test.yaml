@@ -91,6 +91,28 @@ steps:
       type: repeat
       text: "b"
 
+  # --- Result of question 1 ---
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "a"
+  - actor: alice
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "a"
+      correct: true
+  - actor: bob
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "a"
+      correct: false
+
   # --- Quiz ends ---
   - actor: admin
     action: send

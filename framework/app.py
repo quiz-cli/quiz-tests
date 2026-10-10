@@ -19,6 +19,7 @@ def reset_app() -> FastAPI:
     """Clear all mutable state so each test starts clean."""
     Players._players.clear()  # noqa: SLF001
     Results._results.clear()  # noqa: SLF001
+    app.state.question_in_progress = False
     for attr in ("quiz", "admin"):
         with contextlib.suppress(AttributeError, KeyError):
             delattr(app.state, attr)
