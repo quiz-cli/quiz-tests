@@ -41,14 +41,8 @@ dev = [
 asyncio_mode = "auto"
 timeout = 10
 
-[tool.ruff.lint]
-select = ["ALL"]
-ignore = [
-    "D203",
-    "D212",
-    "COM812",
-    "CPY001",
-]
+[tool.ruff]
+extend = "../.github/ruff.toml"
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["ALL"]
