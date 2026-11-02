@@ -120,11 +120,27 @@ steps:
   - actor: admin
     action: expect
     json:
-      - player: alice
-        question_number: 0
-        answer: a
-        correct: true
-      - player: bob
-        question_number: 0
-        answer: b
-        correct: false
+      type: final_scores
+      scores:
+        - player: alice
+          correct_count: 1
+        - player: bob
+          correct_count: 0
+  - actor: alice
+    action: expect
+    json:
+      type: final_results
+      correct_count: 1
+      results:
+          - question_number: 0
+            answer: a
+            correct: true
+  - actor: bob
+    action: expect
+    json:
+      type: final_results
+      correct_count: 0
+      results:
+          - question_number: 0
+            answer: b
+            correct: false

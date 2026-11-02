@@ -455,7 +455,20 @@ steps:
     data: "y"
   - actor: admin
     action: expect
-    json: []              # results list
+    json:
+      type: final_scores
+      scores:
+        - player: alice
+          correct_count: 1
+  - actor: alice
+    action: expect
+    json:
+      type: final_results
+      correct_count: 1
+      results:
+        - question_number: 0
+          answer: a
+          correct: true
 ```
 
 ## How It Works at Runtime
