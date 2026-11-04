@@ -49,7 +49,9 @@ steps:
   - actor: admin
     action: send
     data: "y"
-  # Admin receives empty results
+  # Admin receives empty final scores
   - actor: admin
     action: expect
-    json: []
+    json:
+      type: final_scores
+      scores: []
