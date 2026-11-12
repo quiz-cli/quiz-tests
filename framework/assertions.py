@@ -10,24 +10,14 @@ from typing import Any
 def assert_text_exact(received: str, expected: str, step_index: int) -> None:
     """Assert received text matches exactly."""
     if received != expected:
-        msg = (
-            f"Step {step_index}: expected exact text:\n"
-            f"  {expected!r}\n"
-            f"got:\n"
-            f"  {received!r}"
-        )
+        msg = f"Step {step_index}: expected exact text:\n  {expected!r}\ngot:\n  {received!r}"
         raise AssertionError(msg)
 
 
 def assert_contains(received: str, substring: str, step_index: int) -> None:
     """Assert received text contains the substring."""
     if substring not in received:
-        msg = (
-            f"Step {step_index}: expected text to contain:\n"
-            f"  {substring!r}\n"
-            f"got:\n"
-            f"  {received!r}"
-        )
+        msg = f"Step {step_index}: expected text to contain:\n  {substring!r}\ngot:\n  {received!r}"
         raise AssertionError(msg)
 
 
@@ -68,10 +58,7 @@ def assert_json(received: str, expected: Any, step_index: int) -> None:  # noqa:
                 )
                 raise AssertionError(msg)
             if data[key] != value:
-                msg = (
-                    f"Step {step_index}: key {key!r}: "
-                    f"expected {value!r}, got {data[key]!r}"
-                )
+                msg = f"Step {step_index}: key {key!r}: expected {value!r}, got {data[key]!r}"
                 raise AssertionError(msg)
     elif data != expected:
         msg = f"Step {step_index}: expected JSON:\n  {expected!r}\ngot:\n  {data!r}"
