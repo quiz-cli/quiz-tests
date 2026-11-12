@@ -8,6 +8,7 @@ quiz:
   name: Solo admin quiz
   questions:
     - text: "Question with no audience"
+      type: single_choice
       options:
         - answer: "A"
           correct: true

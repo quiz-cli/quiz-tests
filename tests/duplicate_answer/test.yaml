@@ -8,6 +8,7 @@ quiz:
   name: Duplicate answer test
   questions:
     - text: "Answer this once"
+      type: single_choice
       options:
         - answer: "A"
           correct: true

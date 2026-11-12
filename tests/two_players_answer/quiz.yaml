@@ -2,6 +2,7 @@
 name: Simple example quiz to show how does it work
 questions:
   - text: This question has one correct answer which is A
+    type: single_choice
     time_limit: 30
     options:
       - answer: Yes, this is the correct answer

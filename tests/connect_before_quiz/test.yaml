@@ -8,6 +8,7 @@ quiz:
   name: Unused quiz
   questions:
     - text: "Placeholder question"
+      type: single_choice
       options:
         - answer: "A"
           correct: true
