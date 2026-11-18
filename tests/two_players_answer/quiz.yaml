@@ -13,3 +13,15 @@ questions:
         correct: false
       - answer: Not correct
         correct: false
+  - text: This question has one correct answer which is B
+    type: single_choice
+    time_limit: 30
+    options:
+      - answer: Not correct
+        correct: false
+      - answer: Yes, this is the correct answer
+        correct: true
+      - answer: Not correct
+        correct: false
+      - answer: Not correct
+        correct: false

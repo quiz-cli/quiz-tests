@@ -1,8 +1,8 @@
 ---
-name: "Two players answer a single question"
+name: "Two players answer different questions"
 description: >
-  Admin starts a 1-question quiz. Two players connect and both answer.
-  Verify both receive the question and their answers are echoed back.
+  Alice answers the first question and Bob answers the second. Verify that each
+  player's final results contain only their own answer, in question order.
 
 quiz_file: quiz.yaml
 
@@ -50,15 +50,15 @@ steps:
     action: expect
     contains: "player bob connected"
 
-  # --- Question 1 ---
+  # Alice answers question 1; Bob leaves it unanswered.
   - actor: admin
     action: send
     data: "y"
-
   - actor: alice
     action: expect
     json:
       type: question
+      text: "This question has one correct answer which is A"
   - actor: bob
     action: expect
     json:
@@ -67,8 +67,6 @@ steps:
     action: expect
     json:
       type: question
-
-  # --- Both players answer ---
   - actor: alice
     action: send
     data:
@@ -80,18 +78,6 @@ steps:
       type: repeat
       text: "a"
 
-  - actor: bob
-    action: send
-    data:
-      client_id: bob
-      answer: "b"
-  - actor: bob
-    action: expect
-    json:
-      type: repeat
-      text: "b"
-
-  # --- Result of question 1 ---
   - actor: admin
     action: send
     data: "y"
@@ -111,9 +97,60 @@ steps:
     json:
       type: question_result
       correct_answer: "a"
+      correct: null
+
+  # Bob answers question 2 incorrectly; Alice leaves it unanswered.
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: alice
+    action: expect
+    json:
+      type: question
+      text: "This question has one correct answer which is B"
+  - actor: bob
+    action: expect
+    json:
+      type: question
+      text: "This question has one correct answer which is B"
+  - actor: admin
+    action: expect
+    json:
+      type: question
+      text: "This question has one correct answer which is B"
+  - actor: bob
+    action: send
+    data:
+      client_id: bob
+      answer: "a"
+  - actor: bob
+    action: expect
+    json:
+      type: repeat
+      text: "a"
+
+  - actor: admin
+    action: send
+    data: "y"
+  - actor: admin
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "b"
+  - actor: alice
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "b"
+      correct: null
+  - actor: bob
+    action: expect
+    json:
+      type: question_result
+      correct_answer: "b"
       correct: false
 
-  # --- Quiz ends ---
+  # Each final result must contain only that player's answer.
   - actor: admin
     action: send
     data: "y"
@@ -132,15 +169,15 @@ steps:
       type: final_results
       correct_count: 1
       results:
-          - question_number: 0
-            answer: a
-            correct: true
+        - question_number: 0
+          answer: a
+          correct: true
   - actor: bob
     action: expect
     json:
       type: final_results
       correct_count: 0
       results:
-          - question_number: 0
-            answer: b
-            correct: false
+        - question_number: 1
+          answer: a
+          correct: false
