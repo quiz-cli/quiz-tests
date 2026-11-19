@@ -30,7 +30,7 @@ class Step(BaseModel):
     action: str
 
     # send
-    data: str | dict[str, Any] | None = None
+    data: dict[str, Any] | None = None
 
     # expect
     text: str | None = None

@@ -44,7 +44,7 @@ steps:
   # Proceed to question
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   - actor: alice
     action: expect
     json:
@@ -79,7 +79,7 @@ steps:
   # Show result; the first answer remains the only recorded answer
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   - actor: admin
     action: expect
     json:
@@ -95,7 +95,7 @@ steps:
   # End quiz
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   - actor: admin
     action: expect
     json:

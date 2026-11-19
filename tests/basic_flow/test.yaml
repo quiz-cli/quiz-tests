@@ -40,7 +40,7 @@ steps:
     text: "Admin proceeds to question 1"
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
 
   - actor: alice
     action: expect
@@ -69,7 +69,7 @@ steps:
     text: "Admin shows the result of question 1"
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   - actor: admin
     action: expect
     json:
@@ -85,7 +85,7 @@ steps:
   # --- Question 2 ---
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
 
   - actor: alice
     action: expect
@@ -114,7 +114,7 @@ steps:
     text: "Admin shows the result of question 2"
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   - actor: admin
     action: expect
     json:
@@ -130,7 +130,7 @@ steps:
   # --- Quiz ends ---
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   - actor: admin
     action: expect
     json:
