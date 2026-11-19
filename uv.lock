@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.13"
 resolution-markers = [
     "python_full_version >= '3.14'",
@@ -615,7 +615,7 @@ wheels = [
 [[package]]
 name = "quiz-common"
 version = "0.1.0"
-source = { git = "https://github.com/quiz-cli/quiz-common.git#33f3838d2a7c41b0f40741b6d6e2ecb96071e807" }
+source = { git = "https://github.com/quiz-cli/quiz-common.git#e0e1b552cafa82f6c775320d29bce845df009006" }
 dependencies = [
     { name = "pydantic" },
 ]
@@ -623,7 +623,7 @@ dependencies = [
 [[package]]
 name = "quiz-server"
 version = "0.1.0"
-source = { git = "https://github.com/quiz-cli/quiz-server.git#f89f585c813e01ff1139fd571f42b7123a1a36a9" }
+source = { git = "https://github.com/quiz-cli/quiz-server.git#f0ca60153670055a1adc927ed6a725098b64feb2" }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "pydantic" },
