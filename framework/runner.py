@@ -83,9 +83,6 @@ async def _execute_step(  # noqa: C901
     """Dispatch a single test step to the appropriate actor."""
     action = step.action
 
-    if action == "comment":
-        return
-
     assert step.actor is not None  # noqa: S101
     actor = actors[step.actor]
 

@@ -49,8 +49,6 @@ steps:
     contains: "player bob connected"
 
   # --- Question 1 ---
-  - action: comment
-    text: "Admin proceeds to question 1"
   - actor: admin
     action: send
     data: {"type": "next_step"}
