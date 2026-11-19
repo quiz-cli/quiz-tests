@@ -29,7 +29,7 @@ steps:
   # Proceed to question 1
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   - actor: admin
     action: expect
     json:
@@ -39,7 +39,7 @@ steps:
   # Show result of question 1 before ending the quiz
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   - actor: admin
     action: expect
     json:
@@ -49,7 +49,7 @@ steps:
   # Proceed past last question - quiz ends
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   # Admin receives empty final scores
   - actor: admin
     action: expect

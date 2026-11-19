@@ -44,7 +44,7 @@ steps:
   # Run through the question without Alice submitting an answer.
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   - actor: alice
     action: expect
     json:
@@ -57,7 +57,7 @@ steps:
       text: "Question nobody answers"
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   - actor: admin
     action: expect
     json:
@@ -73,7 +73,7 @@ steps:
   # End the quiz and verify the player receives empty personal results.
   - actor: admin
     action: send
-    data: "y"
+    data: {"type": "next_step"}
   - actor: admin
     action: expect
     json:
