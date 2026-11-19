@@ -324,15 +324,6 @@ Wait for a specified duration. Use sparingly — prefer `expect` with timeouts.
   seconds: 0.5
 ```
 
-#### `comment`
-
-No-op annotation for readability. Printed in verbose mode.
-
-```yaml
-- action: comment
-  text: "--- Round 1: first question ---"
-```
-
 ### Full example test
 
 ```yaml
@@ -389,8 +380,6 @@ steps:
     contains: "player bob connected"
 
   # --- Question 1 ---
-  - action: comment
-    text: "Admin proceeds to question 1"
   - actor: admin
     action: send
     data: "y"

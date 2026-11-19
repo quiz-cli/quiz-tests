@@ -88,12 +88,9 @@ class Actor:
         if self.role == ActorRole.admin and quiz_data is not None:
             await self._ws.send_json(quiz_data)
 
-    async def send(self, data: str | dict[str, Any]) -> None:
-        """Send a text or JSON message."""
-        if isinstance(data, str):
-            await self.ws.send_text(data)
-        else:
-            await self.ws.send_json(data)
+    async def send(self, data: dict[str, Any]) -> None:
+        """Send JSON message."""
+        await self.ws.send_json(data)
 
     async def receive_raw(self, timeout: float = 5.0) -> str:  # noqa: ASYNC109
         """
